@@ -3,16 +3,14 @@ package org.education.controller;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.education.beans.*;
-import org.education.beans.dto.ReviewDTO;
-import org.education.beans.security.PersonDetails;
+import org.education.beans.dto.AddCartDTO;
 //import org.education.service.MovieService;
 //import org.education.service.ReviewService;
 import org.education.service.ProductService;
 import org.education.service.exception.ServiceException;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -33,9 +31,29 @@ public class MainController {
         this.productService = productService;
 //        this.reviewService = reviewService;
     }
+    @PostMapping("/addCart")
+    public String addCart(HttpServletRequest request,@ModelAttribute("addCart") @Valid AddCartDTO addCart){
+        try{
+
+            int productId = Integer.parseInt(addCart.getProdId());
+
+            List<CartItem> cart = (List<CartItem>)request.getSession().getAttribute("cart");
+            ProductEnt product = productService.GetProductById(productId);
+            if (cart == null) {
+                cart = new ArrayList<>();
+            }
+            cart.add(new CartItem(product, 1));
+            request.getSession().setAttribute("cart", cart);
+        }catch (ServiceException e){
+            throw new RuntimeException(e);
+        }
+        return "redirect:/";
+    }
+
 
     @GetMapping("/")
-    public String mainPage(HttpServletRequest request) throws ServletException {
+    public String mainPage(HttpServletRequest request,
+                           @ModelAttribute("addCart")  AddCartDTO addCart) throws ServletException {
 
         HttpSession session = request.getSession();
         if(session.isNew()){

@@ -24,7 +24,7 @@ public class CategoryEnt {
     @Column(name = "cat_table_name")
     private String catTableName;
 
-    public Object getCatId() {
+    public int getCatId() {
         return catId;
     }
 

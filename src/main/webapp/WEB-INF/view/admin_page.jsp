@@ -17,25 +17,25 @@
 </head>
 <jsp:include page="common/header.jsp"/>
 <body>
-<h1><fmt:message key="admin.prodadd.header" bundle="${loc}"/></h1>
-<form action="TechStore" method="post" enctype="multipart/form-data">
-    <label for="productName"><fmt:message key="admin.prodadd.label.name" bundle="${loc}"/>:</label>
-    <input type="text" name="productName" id="productName" required><br>
-
-    <label for="productPrice"><fmt:message key="admin.prodadd.label.price" bundle="${loc}"/>:</label>
-    <input type="number" name="productPrice" id="productPrice" required><br>
-    <input type="hidden" name="command" value="ADD_PRODUCT" />
-
-    <label for="productCategory"><fmt:message key="admin.prodadd.label.category" bundle="${loc}" />:</label>
-    <input type="text" name="productCategory" id="productCategory" required><br>
-
-    <label for="productImage"><fmt:message key="admin.prodadd.label.image" bundle="${loc}"/>:</label>
-    <input type="file" name="productImage" id ="productImage" accept="image/*" required>
-
-    <input type="submit" value="<fmt:message key="admin.prodadd.button" bundle="${loc}"/>">
-</form>
-
 <%--<form:form action="${pageContext.request.contextPath}/reg/signIn" method="post" modelAttribute="userEnt">--%>
+
+<h1><fmt:message key="admin.prodadd.header" bundle="${loc}"/></h1>
+<form:form action="${pageContext.request.contextPath}/admin/addProd" method="post"   modelAttribute="addProd">
+    <form:label path="nameP" for="nameP"><fmt:message key="admin.prodadd.label.name" bundle="${loc}"/>:</form:label>
+    <form:input path="nameP" type="text" name="nameP" id="nameP" required="true"/><br>
+
+    <form:label path="price" for="price"><fmt:message key="admin.prodadd.label.price" bundle="${loc}"/>:</form:label>
+    <form:input path="price" type="number" name="price" id="price" required="true"/><br>
+
+    <form:label path="category" for="category"><fmt:message key="admin.prodadd.label.category" bundle="${loc}" />:</form:label>
+    <form:input path="category" type="text" name="category" id="category" required="true"/><br>
+
+<%--    <form:label path="image" for=""><fmt:message key="admin.prodadd.label.image" bundle="${loc}"/>:</form:label>--%>
+<%--    <form:input path="image" type="file" name="image" id ="image" accept="image/*" required="true"/>--%>
+
+    <form:button type="submit" ><fmt:message key="admin.prodadd.button" bundle="${loc}"/></form:button>
+</form:form>
+
 <h1><fmt:message key="admin.ban.header" bundle="${loc}"/></h1>
 <form:form action="${pageContext.request.contextPath}/admin/ban" method="post" modelAttribute="ban">
     <form:label path="name" for="name"><fmt:message key="admin.ban.label.user" bundle="${loc}"/>:</form:label>

@@ -3,7 +3,9 @@ package org.education.controller;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 //import org.education.service.UserService;
+import jakarta.servlet.http.Part;
 import jakarta.validation.Valid;
+import org.education.beans.dto.AddProductDTO;
 import org.education.beans.dto.BanDTO;
 import org.education.beans.dto.DiscountDTO;
 import org.education.beans.dto.SignUpDTO;
@@ -12,6 +14,9 @@ import org.education.service.UserService;
 import org.education.service.exception.ServiceException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import static org.education.beans.Attributes.RETURN_PAGE;
 
@@ -40,7 +45,8 @@ public class AdminController {
     @GetMapping
     public String adminPage(HttpServletRequest request,
                             @ModelAttribute("ban") BanDTO ban,
-                            @ModelAttribute("discountItem") DiscountDTO discount
+                            @ModelAttribute("discountItem") DiscountDTO discount,
+                            @ModelAttribute("addProd") AddProductDTO addProd
     ) throws ServletException {
 
         try {
@@ -52,6 +58,23 @@ public class AdminController {
         return "admin_page";
     }
 
+    @PostMapping("/addProd")
+    public String addProd(@ModelAttribute("addProd") @Valid AddProductDTO addProd){
+        try{
+            InputStream inputStream = null;
+//            Part filePart = addProd.getImage();
+//            if (filePart != null) {
+//                inputStream = filePart.getInputStream();
+//            }
+            productService.AddProduct(addProd.getNameP(),addProd.getPrice(),addProd.getCategory(),inputStream);
+        }catch (ServiceException e){
+            throw new RuntimeException(e);
+        }
+//        catch (IOException e){
+//            throw new RuntimeException(e);
+//        }
+        return "redirect:/admin";
+    }
     @PostMapping("/discount")
     public String discount(@ModelAttribute("discountItem") @Valid DiscountDTO discount){
         try{

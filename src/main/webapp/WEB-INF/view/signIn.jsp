@@ -15,62 +15,62 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
         }
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
+        .form-container {
+            display: flex;
+            flex-direction: column;
         }
 
-        form {
-            max-width: 400px;
-            margin: 20px auto;
+        .registration-form, .login-form {
+            margin-bottom: 20px;
             padding: 20px;
-            background-color: #fff;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         label {
-            display: block;
-            margin: 10px 0 5px;
+            margin-bottom: 5px;
         }
 
-        input {
-            width: 100%;
+        input[type="text"],
+        input[type="password"] {
+            width: 94%;
             padding: 8px;
             margin-bottom: 10px;
-            box-sizing: border-box;
+
+            padding-right: -20px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
-        button {
-            width: 100%;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 3px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        button:hover {
-            background-color: #0056b3;
+        input[type="submit"]:hover {
+            background-color: #45a049;
         }
+
     </style>
 </head>
 
 <body>
 
-<jsp:include page="common/header.jsp"/>
-
+<%--<jsp:include page="common/header.jsp"/>--%>
+<div class="form-container">
+    <div class="login-form">
 <form:form action="${pageContext.request.contextPath}/reg/signIn" method="post" modelAttribute="userEnt">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
@@ -85,6 +85,8 @@
     <form:button type="submit"><fmt:message key="form.submitBtn" bundle="${loc}"/></form:button>
     <c:if test="${param.containsKey('error')}">Incorrect login or password</c:if>
 </form:form>
+    </div>
+</div>
 
 </body>
 

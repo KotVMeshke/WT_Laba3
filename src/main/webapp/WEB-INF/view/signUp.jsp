@@ -91,7 +91,7 @@
     <form:button type="submit"><fmt:message key="form.submitBtn" bundle="${loc}"/></form:button>
 </form:form>
         </div>
-</div>>
+</div>
 
 </body>
 

@@ -2,6 +2,8 @@ package org.education.DAO.impl;
 
 import org.education.DAO.ProductDao;
 import org.education.DAO.exception.DatabaseQueryException;
+import org.education.beans.CategoryEnt;
+import org.education.beans.ProductCategoryEnt;
 import org.education.beans.ProductEnt;
 import org.education.beans.UserEnt;
 import org.hibernate.SessionFactory;
@@ -71,6 +73,18 @@ public class SQLProductDAO implements ProductDao {
 //        }
 //        return list;
     }
+
+    @Override
+    public ProductCategoryEnt GetCatByCatName(String catName) throws DatabaseQueryException{
+        return sessionFactory.fromTransaction(session -> {
+            var query = session.createSelectionQuery("from ProductCategoryEnt where catName = :name", ProductCategoryEnt.class);
+            query.setParameter("name",catName);
+            ProductCategoryEnt cat = query.getSingleResultOrNull();
+            if (cat == null) return null;
+            else return cat;
+        });
+    }
+
 
     /**
      * Retrieves all products from the database.
@@ -145,16 +159,9 @@ public class SQLProductDAO implements ProductDao {
 //            }
 //        }
 //        return true;
-    /**
-     * Adds a new product to the database.
-     * @param name The name of the product.
-     * @param price The price of the product.
-     * @param category The category of the product.
-     * @param file The image file of the product.
-     * @throws DatabaseQueryException if there's an error adding the product.
-     */
     @Override
-    public boolean AddProduct(String name,String price, String category, InputStream file) throws DatabaseQueryException {
+    public boolean AddProduct(ProductEnt productEnt) throws DatabaseQueryException {
+        sessionFactory.inTransaction(session -> session.merge(productEnt));
         return true;
 //        ConnectionPool connectionPool = ConnectionPoolFactory.getInstance().getConnectionPool();
 //        PreparedStatement ps = null;

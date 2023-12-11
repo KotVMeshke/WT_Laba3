@@ -1,6 +1,8 @@
 package org.education.DAO;
 
 import org.education.DAO.exception.DatabaseQueryException;
+import org.education.beans.CategoryEnt;
+import org.education.beans.ProductCategoryEnt;
 import org.education.beans.ProductEnt;
 
 import java.io.InputStream;
@@ -26,23 +28,12 @@ public interface ProductDao {
      */
     List<ProductEnt> GetAllProduct() throws DatabaseQueryException;
 
-    /**
-     * Sets a discount for a specific product.
-     * @param productId The ID of the product for which the discount is to be set.
-     * @param discountSize The discount percentage to be set.
-     * @throws DatabaseQueryException if there's an error while setting the discount.
-     */
+    ProductCategoryEnt GetCatByCatName(String name) throws DatabaseQueryException;
+
     boolean SetDiscount(ProductEnt product) throws DatabaseQueryException;
 
-    /**
-     * Adds a new product to the database.
-     * @param name The name of the product.
-     * @param price The price of the product.
-     * @param category The category of the product.
-     * @param file InputStream representing the image file of the product.
-     * @throws DatabaseQueryException if there's an error while adding the product.
-     */
-    boolean AddProduct(String name, String price, String category, InputStream file) throws DatabaseQueryException;
+
+    boolean AddProduct(ProductEnt productEnt) throws DatabaseQueryException;
 
     /**
      * Retrieves a product by its ID.

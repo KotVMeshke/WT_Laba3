@@ -3,11 +3,14 @@ package org.education.service.impl;
 
 import org.education.DAO.ProductDao;
 import org.education.DAO.exception.DatabaseQueryException;
+import org.education.beans.CategoryEnt;
+import org.education.beans.ProductCategoryEnt;
 import org.education.beans.ProductEnt;
 import org.education.service.ProductService;
 import org.education.service.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
@@ -44,17 +47,15 @@ public class ProductServiceImpl implements ProductService {
         catch (DatabaseQueryException e) {
             throw new ServiceException(e.getMessage());
         }
-//        List<Product> list = null;
-//        try {
-//
-//                ProductDao productDao = DAOFactory.getFactory().getProductDao();
-//                list = productDao.GetAllProduct();
-//
-//
-//        }catch (DAOException ex){
-//            throw  new ServiceException(ex);
-//        }
-//
+    }
+    @Override
+    public ProductCategoryEnt GetCatByName(String catName) throws ServiceException
+    {
+        try {
+            return productDao.GetCatByCatName(catName);
+        } catch (DatabaseQueryException e) {
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
@@ -73,14 +74,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean AddProduct(String name, String price, String category, InputStream file) throws ServiceException {
-//        try {
-//            ProductDao productDao = DAOFactory.getFactory().getProductDao();
-//            if (name == null || price == null || category == null || file == null){
-//                throw new ServiceException("Incorrect value in product add");
-//            }
-//            productDao.AddProduct(name, price, category, file);
-//        }catch (DAOException ex){
-//            throw  new ServiceException(ex);
+        ProductEnt productEnt = null;
+        try {
+            ProductCategoryEnt categoryEnt = productDao.GetCatByCatName(category);
+            int cat = categoryEnt.getCatId();
+            productEnt = ProductEnt.builder().proPrice(price).proCat(cat).proName(name).build();
+            productDao.AddProduct(productEnt);
+        }catch (DatabaseQueryException ex) {
+            throw new ServiceException(ex.getMessage());
+        }
+//        } catch (IOException ex){
+//            throw new ServiceException(ex.getMessage());
 //        }
 
         return true;
@@ -93,16 +97,5 @@ public class ProductServiceImpl implements ProductService {
         } catch (DatabaseQueryException e) {
             throw new ServiceException(e.getMessage());
         }
-//        Product product = null;
-//        try {
-//            if (id <= 0){
-//                throw  new ServiceException("Incorrect id");
-//            }
-//            ProductDao productDao = DAOFactory.getFactory().getProductDao();
-//            product = productDao.GetProductById(id);
-//
-//        }catch (DAOException ex){
-//            throw  new ServiceException(ex);
-//        }
     }
 }
