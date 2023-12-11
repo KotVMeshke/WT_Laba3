@@ -25,9 +25,9 @@ public class UserDAOImpl implements UserDAO {
         this.sessionFactory = sessionFactory;
     }
 
-//    @Override
-//    public List<UserEnt> getUsers() throws DatabaseQueryException {
-//        return sessionFactory.fromTransaction(session -> session.createSelectionQuery("from UserEnt", UserEnt.class).getResultList());
+    @Override
+    public List<UserEnt> getUsers() throws DatabaseQueryException {
+        return sessionFactory.fromTransaction(session -> session.createSelectionQuery("from UserEnt", UserEnt.class).getResultList());
 ////        List<User> res = new ArrayList<>();
 ////        try(Connection connection = connectionPool.getConnection()){
 ////            String sql = "SELECT * FROM users";
@@ -45,7 +45,7 @@ public class UserDAOImpl implements UserDAO {
 ////            throw new DatabaseQueryException("Some problems with database");
 ////        }
 ////        return res;
-//    }
+    }
 //
     @Override
     public Optional<UserEnt> getUserByUsername(String name) throws DatabaseQueryException {

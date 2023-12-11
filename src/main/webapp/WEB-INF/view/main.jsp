@@ -79,15 +79,48 @@
     <!-- Movie Cards will be dynamically generated here -->
 
 
-    <c:forEach var="movie" items="${movies}">
-        <div class="movie-card">
-                <img src="${pageContext.request.contextPath}/images/image.jpg" alt="image"/>
-            <a href="/movie/${movie.getId()}">${movie.getName()}</a>
-            <p>${movie.getShortDescription()}</p>
-        </div>
-    </c:forEach>
+<%--    <c:forEach var="product" items="${products}">--%>
+<%--        <div class="movie-card">--%>
+<%--                <img src="${pageContext.request.contextPath}/images/image.jpg" alt="image"/>--%>
+<%--            <a href="/movie/${Pr.getId()}">${movie.getName()}</a>--%>
+<%--            <p>${movie.getShortDescription()}</p>--%>
+<%--        </div>--%>
+<%--    </c:forEach>--%>
     <!-- Repeat the movie card structure for other movies -->
 
+</div>
+
+<div class="container">
+    <h1><fmt:message key="main.product.header" bundle="${loc}"/></h1>
+    <c:forEach var="product" items="${products}">
+        <div class="product-box">
+            <h2>${product.getProName()}</h2>
+            <img src="data:image/jpg;base64,${product.getProImage()}" alt="" width="240" height="300"/>
+            <c:choose>
+                <c:when test="${product.getProDiscount() == 0 or empty product.getProDiscount()}">
+                    <p><fmt:message key="main.product.price" bundle="${loc}"/>: ${product.getProPrice()}</p>
+                </c:when>
+                <c:otherwise>
+                    <fmt:formatNumber var="roundedValue" value="${product.getProPrice()*(100-product.getProDiscount())/100}"
+                                      pattern="#,##0.00"/>
+                    <p><fmt:message key="main.product.price" bundle="${loc}"/>:
+                        <del>${product.getProPrice()}</del>
+                        <span style="color: red;">${roundedValue}</span></p>
+                </c:otherwise>
+            </c:choose>
+
+
+            <p><fmt:message key="main.product.category" bundle="${loc}"/>: ${product.getProCat()}</p>
+
+<%--            <c:if test="${not empty sessionScope.UserId}">--%>
+<%--                <form action="TechStore" method="post">--%>
+<%--                    <input type="hidden" name="command" value="ADD_TO_CART">--%>
+<%--                    <input type="hidden" name="productId" value="${product.id}">--%>
+<%--                    <button type="submit"><fmt:message key="main.product.add.button"/></button>--%>
+<%--                </form>--%>
+<%--            </c:if>--%>
+        </div>
+    </c:forEach>
 </div>
 
 <div class="pagination">

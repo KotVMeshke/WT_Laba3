@@ -6,11 +6,8 @@ package org.education.beans;
  * @brief Роли пользователей
  */
 public enum Role {
-    ROLE_ADMIN,
-    ROLE_USER,
     ADMINISTRATOR,
 
     User,
-    ROLE_NOT_AUTH,
-    ROLE_BANNED
+
 }

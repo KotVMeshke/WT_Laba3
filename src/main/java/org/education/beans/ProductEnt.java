@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collection;
 
 @Builder
@@ -76,8 +77,8 @@ public class ProductEnt {
         this.proCat = proCat;
     }
 
-    public byte[] getProImage() {
-        return proImage;
+    public String getProImage() {
+        return Base64.getEncoder().encodeToString(proImage);
     }
 
     public void setProImage(byte[] proImage) {

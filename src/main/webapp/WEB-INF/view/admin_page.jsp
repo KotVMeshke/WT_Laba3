@@ -18,9 +18,9 @@
 <body>
     <c:forEach var="user" items="${users}">
         <div>
-            <p>${user.getLogin()}(<fmt:message key="user.rating" bundle="${loc}"/>: ${user.getSocialCredit()}) ${user.getRole().toString()}</p>
-            <a href="/ban/${user.getId()}"><fmt:message key="user.ban" bundle="${loc}"/></a>
-            <a href="/delete/${user.getId()}"><fmt:message key="user.delete" bundle="${loc}"/></a>
+            <p>${user.getUserLogin()}(<fmt:message key="user.role" bundle="${loc}"/>: ) ${user.getRole().toString()}</p>
+            <a href="/ban/${user.getIdUser()}"><fmt:message key="user.ban" bundle="${loc}"/></a>
+            <a href="/delete/${user.getIdUser()}"><fmt:message key="user.delete" bundle="${loc}"/></a>
             <br>
         </div>
     </c:forEach>

@@ -8,6 +8,7 @@ import org.education.beans.dto.ReviewDTO;
 import org.education.beans.security.PersonDetails;
 //import org.education.service.MovieService;
 //import org.education.service.ReviewService;
+import org.education.service.ProductService;
 import org.education.service.exception.ServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,14 @@ import static org.education.beans.Attributes.RETURN_PAGE;
 @RequestMapping("/")
 public class MainController {
 
-//    private final MovieService movieService;
+    private final ProductService productService;
 //    private final ReviewService reviewService;
 
 
-    public MainController(
-//            MovieService movieService, ReviewService reviewService
+    public MainController(ProductService productService
+//                           ReviewService reviewService
     ) {
-//        this.movieService = movieService;
+        this.productService = productService;
 //        this.reviewService = reviewService;
     }
 
@@ -51,12 +52,12 @@ public class MainController {
         catch (Exception exception){
             pageInd = 0;
         }
-//        try {
-//            session.setAttribute("movies",movieService.getMovies(pageInd));
+        try {
+            session.setAttribute("products",productService.GetAllProduct());
 //            session.setAttribute("maxPage", movieService.getPageCount());
-//        } catch (ServiceException e) {
-//            throw new ServletException(e.getMessage());
-//        }
+        } catch (ServiceException e) {
+            throw new ServletException(e.getMessage());
+        }
         session.setAttribute("page", pageInd);
         session.setAttribute(RETURN_PAGE, request.getRequestURI());
         return "main";
@@ -89,7 +90,7 @@ public class MainController {
         int newInd = ((int)session.getAttribute(Attributes.LANG_ATTRIBUTE) + 1) % Languages.values().length;
         session.setAttribute(Attributes.LANG_NAME_ATTRIBUTE, Languages.values()[newInd].toString());
         session.setAttribute(Attributes.LANG_ATTRIBUTE, newInd);
-        return "redirect:" + session.getAttribute(RETURN_PAGE);
+        return "redirect:/";
     }
 
 

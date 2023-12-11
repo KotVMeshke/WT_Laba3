@@ -30,12 +30,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEnt> getUsers() throws ServiceException {
-//        try {
-//            return userDAO.getUsers();
-//        } catch (DatabaseQueryException e) {
-//            throw new ServiceException();
-//        }
-        return null;
+        try {
+            return userDAO.getUsers();
+        } catch (DatabaseQueryException e) {
+            throw new ServiceException();
+        }
     }
 
     @Override
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void newUser( String password, String username) throws ServiceException {
+    public void newUser(String password, String username) throws ServiceException {
         UserEnt user;
         try {
             Byte b = 0;
@@ -98,7 +97,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(int id) throws ServiceException {
 //        try {
-////            userDAO.deleteUser(id);
+//            userDAO.deleteUser(id);
 //        } catch (DatabaseQueryException e) {
 //            throw new ServiceException(e.getMessage());
 //        }
@@ -109,11 +108,11 @@ public class UserServiceImpl implements UserService {
         Optional<UserEnt> userOptional = getUserById(id);
         if(userOptional.isPresent()){
             UserEnt user = userOptional.get();
-            if(user.getRole() != Role.ROLE_BANNED){
-                user.setRole(Role.ROLE_BANNED);
-            }else {
-                user.setRole(Role.ROLE_USER);
-            }
+//            if(user.getRole() != Role.ROLE_BANNED){
+//                user.setRole(Role.ROLE_BANNED);
+//            }else {
+//                user.setRole(Role.ROLE_USER);
+//            }
             try {
                 userDAO.saveUser(user);
             } catch (DatabaseQueryException e) {

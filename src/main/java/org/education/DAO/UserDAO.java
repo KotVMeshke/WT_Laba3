@@ -13,7 +13,7 @@ public interface UserDAO {
      * @return список всех пользователей
      * @throws DatabaseQueryException ошибка базы данных
      */
-//    List<UserEnt> getUsers() throws DatabaseQueryException;
+    List<UserEnt> getUsers() throws DatabaseQueryException;
 //
 //    /**
 //     * @param name
