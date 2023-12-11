@@ -70,5 +70,5 @@ public interface UserService {
      * @param id
      * @throws ServiceException
      */
-    void changeStatus(int id) throws ServiceException;
+    void changeStatus(String name) throws ServiceException;
 }

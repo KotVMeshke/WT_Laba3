@@ -3,6 +3,7 @@ package org.education.DAO.impl;
 import org.education.DAO.ProductDao;
 import org.education.DAO.exception.DatabaseQueryException;
 import org.education.beans.ProductEnt;
+import org.education.beans.UserEnt;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation of ProductDao handling product-related database operations.
@@ -112,14 +114,10 @@ public class SQLProductDAO implements ProductDao {
 //        }
 //        return list;
     }
-    /**
-     * Sets the discount for a product in the database.
-     * @param productId The ID of the product.
-     * @param discountSize The discount to set for the product.
-     * @throws DatabaseQueryException if there's an error setting the discount.
-     */
+
     @Override
-    public boolean SetDiscount(int productId, int discountSize) throws DatabaseQueryException {
+    public boolean SetDiscount(ProductEnt product) throws DatabaseQueryException {
+        sessionFactory.inTransaction(session -> session.merge(product));
         return true;
     }
 //        ConnectionPool connectionPool = ConnectionPoolFactory.getInstance().getConnectionPool();
@@ -204,7 +202,13 @@ public class SQLProductDAO implements ProductDao {
      */
     @Override
     public ProductEnt GetProductById(int id) throws DatabaseQueryException {
-        return null;
+        return sessionFactory.fromTransaction(session -> {
+            var query = session.createSelectionQuery("from ProductEnt where proId = :id", ProductEnt.class);
+            query.setParameter("id",id);
+            ProductEnt prod = query.getSingleResultOrNull();
+            if (prod == null) return null;
+            else return prod;
+        });
 //        ConnectionPool connectionPool = ConnectionPoolFactory.getInstance().getConnectionPool();
 //        PreparedStatement ps = null;
 //        Connection con = null;

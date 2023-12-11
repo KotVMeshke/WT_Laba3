@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ProductServiceImpl implements ProductService {
@@ -58,23 +59,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean SetDiscount(int productId, int discountSize) throws ServiceException {
-//        try {
-//            if (productId <= 0){
-//                throw new ServiceException("Incorrect product id");
-//            }
-//            ProductDao productDao = DAOFactory.getFactory().getProductDao();
-//            if (discountSize < 0) {
-//                discountSize = 0;
-//            } else if (discountSize > 100) {
-//                discountSize = 100;
-//            }
-//
-//            productDao.SetDiscount(productId, discountSize);
-//
-//
-//        }catch (DAOException ex){
-//            throw  new ServiceException(ex);
-//        }
+       ProductEnt product = GetProductById(productId);
+            try {
+                product.setProDiscount(discountSize);
+                productDao.SetDiscount(product);
+            } catch (DatabaseQueryException e) {
+                throw new ServiceException(e.getMessage());
+            }
+
 
         return false;
     }
@@ -96,6 +88,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEnt GetProductById(int id) throws ServiceException {
+        try {
+            return productDao.GetProductById(id);
+        } catch (DatabaseQueryException e) {
+            throw new ServiceException(e.getMessage());
+        }
 //        Product product = null;
 //        try {
 //            if (id <= 0){
@@ -107,6 +104,5 @@ public class ProductServiceImpl implements ProductService {
 //        }catch (DAOException ex){
 //            throw  new ServiceException(ex);
 //        }
-        return null;
     }
 }

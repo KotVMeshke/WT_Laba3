@@ -32,7 +32,7 @@ public interface ProductDao {
      * @param discountSize The discount percentage to be set.
      * @throws DatabaseQueryException if there's an error while setting the discount.
      */
-    boolean SetDiscount(int productId, int discountSize) throws DatabaseQueryException;
+    boolean SetDiscount(ProductEnt product) throws DatabaseQueryException;
 
     /**
      * Adds a new product to the database.

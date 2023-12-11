@@ -36,7 +36,7 @@ public interface UserDAO {
 //     * @return
 //     * @throws DatabaseQueryException
 //     */
-//    Optional<UserEnt> getUserById(int id) throws DatabaseQueryException;
+    Optional<UserEnt> getUserById(int id) throws DatabaseQueryException;
 
     /**
      *

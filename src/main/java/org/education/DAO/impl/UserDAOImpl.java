@@ -103,15 +103,15 @@ public class UserDAOImpl implements UserDAO {
 ////        return res;
 //    }
 //
-//    @Override
-//    public Optional<UserEnt> getUserById(int id) throws DatabaseQueryException {
-//        return sessionFactory.fromTransaction(session -> {
-//            var query = session.createSelectionQuery("from UserEnt where idUser = :id", UserEnt.class);
-//            query.setParameter("id",id);
-//            UserEnt user = query.getSingleResultOrNull();
-//            if (user == null) return Optional.empty();
-//            else return Optional.of(user);
-//        });
+    @Override
+    public Optional<UserEnt> getUserById(int id) throws DatabaseQueryException {
+        return sessionFactory.fromTransaction(session -> {
+            var query = session.createSelectionQuery("from UserEnt where idUser = :id", UserEnt.class);
+            query.setParameter("id",id);
+            UserEnt user = query.getSingleResultOrNull();
+            if (user == null) return Optional.empty();
+            else return Optional.of(user);
+        });
 ////        Optional<User> res = Optional.empty();
 ////        try(Connection connection = connectionPool.getConnection()){
 ////            String sql = "SELECT * FROM users WHERE user_id = ?";
@@ -129,7 +129,7 @@ public class UserDAOImpl implements UserDAO {
 ////            throw new DatabaseQueryException(e.getMessage());
 ////        }
 ////        return res;
-//    }
+    }
 
     @Override
     public void saveUser(UserEnt user) throws DatabaseQueryException {

@@ -39,22 +39,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserEnt> getUserByUsername(String name) throws ServiceException {
-//        try {
-//            return userDAO.getUserByUsername(name);
-//        } catch (DatabaseQueryException e) {
-//            throw new ServiceException(e.getMessage());
-//        }
-        return null;
+        try {
+            return userDAO.getUserByUsername(name);
+        } catch (DatabaseQueryException e) {
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
     public Optional<UserEnt> getUserById(int id) throws ServiceException {
-//        try {
-//            return userDAO.getUserById(id);
-//        } catch (DatabaseQueryException e) {
-//            throw new ServiceException(e.getMessage());
-//        }
-        return null;
+        try {
+            return userDAO.getUserById(id);
+        } catch (DatabaseQueryException e) {
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
@@ -104,15 +102,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeStatus(int id) throws ServiceException {
-        Optional<UserEnt> userOptional = getUserById(id);
+    public void changeStatus(String name) throws ServiceException {
+        Optional<UserEnt> userOptional = getUserByUsername(name);
         if(userOptional.isPresent()){
             UserEnt user = userOptional.get();
-//            if(user.getRole() != Role.ROLE_BANNED){
-//                user.setRole(Role.ROLE_BANNED);
-//            }else {
-//                user.setRole(Role.ROLE_USER);
-//            }
+            if(user.getBan() != 0){
+                Byte ban = 0;
+                user.setBan(ban);
+            }else {
+                Byte ban = 1;
+                user.setBan(ban);
+            }
             try {
                 userDAO.saveUser(user);
             } catch (DatabaseQueryException e) {
