@@ -20,7 +20,7 @@ public class OrdersEnt {
     private int ordId;
     @Basic
     @Column(name = "ord_price")
-    private Double ordPrice;
+    private float ordPrice;
     @Basic
     @Column(name = "ord_status")
     private Object ordStatus;
@@ -41,11 +41,11 @@ public class OrdersEnt {
         this.ordId = ordId;
     }
 
-    public Double getOrdPrice() {
+    public float getOrdPrice() {
         return ordPrice;
     }
 
-    public void setOrdPrice(Double ordPrice) {
+    public void setOrdPrice(float ordPrice) {
         this.ordPrice = ordPrice;
     }
 
@@ -81,7 +81,7 @@ public class OrdersEnt {
         OrdersEnt ordersEnt = (OrdersEnt) o;
 
         if (ordId != ordersEnt.ordId) return false;
-        if (ordPrice != null ? !ordPrice.equals(ordersEnt.ordPrice) : ordersEnt.ordPrice != null) return false;
+        if ((ordPrice == ordersEnt.ordPrice)) return false;
         if (ordStatus != null ? !ordStatus.equals(ordersEnt.ordStatus) : ordersEnt.ordStatus != null) return false;
         if (ordAddress != null ? !ordAddress.equals(ordersEnt.ordAddress) : ordersEnt.ordAddress != null) return false;
         if (ordTimeStamp != null ? !ordTimeStamp.equals(ordersEnt.ordTimeStamp) : ordersEnt.ordTimeStamp != null)
@@ -93,7 +93,7 @@ public class OrdersEnt {
     @Override
     public int hashCode() {
         int result = ordId;
-        result = 31 * result + (ordPrice != null ? ordPrice.hashCode() : 0);
+        result = 31 * result + (Float.hashCode(ordPrice));
         result = 31 * result + (ordStatus != null ? ordStatus.hashCode() : 0);
         result = 31 * result + (ordAddress != null ? ordAddress.hashCode() : 0);
         result = 31 * result + (ordTimeStamp != null ? ordTimeStamp.hashCode() : 0);

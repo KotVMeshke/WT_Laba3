@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="localizations.localization" var="loc"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -119,7 +121,7 @@
 
     </style>
 </head>
-
+<jsp:include page="common/header.jsp"/>
 <body>
 
 <h1><fmt:message key="shoppingcart.header" bundle="${loc}"/></h1>
@@ -144,33 +146,27 @@
                 </c:otherwise>
             </c:choose>
 
-            <p><fmt:message key="shoppingcart.label.category" bundle="${loc}"/>: ${CartItem.product.getProCat()}</p>
             <p><fmt:message key="shoppingcart.label.amount" bundle="${loc}" />: ${CartItem.amount}</p>
 
 
-<%--            <form action="TechStore" method="post">--%>
-<%--                <input type="hidden" name="command" value="UPDATE_CART">--%>
-<%--                <input type="hidden" name="productId" value="${CartItem.product.id}">--%>
+<%--            <form:form action="${pageContext.request.contextPath}/cart/updateCart" method="post" modelAttribute="updateCart">--%>
+<%--                <form:input path="prodId2" value="${CartItem.product.getProId()}" type="hidden"/>--%>
+<%--                <form:label path="prodAmount" for="prodAmount"><fmt:message key="shoppingcart.label.amount" bundle="${loc}"/>:</form:label>--%>
+<%--                <form:input path="prodAmount" type="text" id="prodAmount" name="prodAmount" required="true"/>--%>
+<%--                <form:button type="submit"><fmt:message key="shoppingcart.button.update" bundle="${loc}"/></form:button>--%>
+<%--            </form:form>--%>
 
-<%--                <label for="quantity"><fmt:message key="shoppingcart.label.amount" />:</label>--%>
-<%--                <input type="number" id="quantity" name="quantity" value="${CartItem.amount}" min="1" required>--%>
+            <form:form action="${pageContext.request.contextPath}/cart/removeCart" method="post" modelAttribute="addCart">
+                <form:input path="prodId" value="${CartItem.product.getProId()}" type="hidden"/>
+                <form:button type="submit"><fmt:message key="shoppingcart.button.remove" bundle="${loc}"/></form:button>
+            </form:form>
 
-<%--                <button type="submit">Update Quantity</button>--%>
-<%--            </form>--%>
 
-<%--            <form action="TechStore" method="post">--%>
-<%--                <input type="hidden" name="command" value="REMOVE_FROM_CART">--%>
-<%--                <input type="hidden" name="productId" value="${CartItem.product.id}">--%>
-<%--                <button type="submit"><fmt:message key="shoppingcart.button.remove" /></button>--%>
-<%--            </form>--%>
         </div>
     </c:forEach>
 </div>
 <c:if test="${not empty sessionScope.cart}">
-    <form action="Checkout" method="post">
-        <input type="hidden" name="command" value="CHECKOUT">
-        <button type="submit"><fmt:message key="shoppingcart.button.order" bundle="${loc}"/></button>
-    </form>
+    <a href="${pageContext.request.contextPath}/cart/orderPage"><fmt:message key="shoppingcart.button.order" bundle="${loc}"/></a>
 </c:if>
 </body>
 

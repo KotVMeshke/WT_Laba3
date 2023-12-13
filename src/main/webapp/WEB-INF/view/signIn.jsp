@@ -66,6 +66,8 @@
     </style>
 </head>
 
+<jsp:include page="common/header.jsp"/>
+
 <body>
 
 <%--<jsp:include page="common/header.jsp"/>--%>

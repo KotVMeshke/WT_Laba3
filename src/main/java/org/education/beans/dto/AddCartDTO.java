@@ -6,5 +6,6 @@ import lombok.Data;
 public class AddCartDTO {
 
     String prodId;
-
+    String prodId2;
+    String prodAmount;
 }

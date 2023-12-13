@@ -65,20 +65,20 @@
   }
 
   .signin, .signup {
-    width: 90%;
-    height: 90%;
-    font-size: 18px; /* Set the font size according to your preference */
-    margin: 10px; /* Set the margin according to your preference */
-    background-color: #2f2e2e;
-    color: white;
-    border: none;
-    border-radius: 25px; /* Add rounded corners */
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Add smooth transition for hover effect */
+      width: 90%;
+      height: 90%;
+      font-size: 18px; /* Set the font size according to your preference */
+      margin: 10px; /* Set the margin according to your preference */
+      background-color: #2f2e2e;
+      color: white;
+      border: none;
+      border-radius: 25px; /* Add rounded corners */
+      cursor: pointer;
+      transition: background-color 0.3s ease; /* Add smooth transition for hover effect */
   }
 
   .signin:hover, .signup:hover {
-    background-color: #555; /* Change background color on hover */
+      background-color: #555; /* Change background color on hover */
   }
 
   body {
@@ -110,8 +110,8 @@
           <div class="buttons">
                 <a href="${pageContext.request.contextPath}/"><fmt:message key="bar.home" bundle="${loc}"/></a>
             <security:authorize access="!isAuthenticated()">
-              <a href="${pageContext.request.contextPath}/reg/signInPage"><fmt:message key="bar.sign_in" bundle="${loc}"/></a>
-              <a href="${pageContext.request.contextPath}/reg/signUpPage"><fmt:message key="bar.sign_up" bundle="${loc}"/></a>
+              <a  class ="signin" href="${pageContext.request.contextPath}/reg/signInPage"><fmt:message key="bar.sign_in" bundle="${loc}"/></a>
+              <a  class ="signup" href="${pageContext.request.contextPath}/reg/signUpPage"><fmt:message key="bar.sign_up" bundle="${loc}"/></a>
             </security:authorize>
           </div>
           <div class="buttons">
@@ -128,20 +128,4 @@
   </div>
 
 </header>
-
-
-<%--  <nav>--%>
-<%--    <a href="${pageContext.request.contextPath}/"><fmt:message key="bar.home" bundle="${loc}"/></a>--%>
-<%--    <security:authorize access="!isAuthenticated()">--%>
-<%--      <a href="${pageContext.request.contextPath}/reg/signInPage"><fmt:message key="bar.sign_in" bundle="${loc}"/></a>--%>
-<%--      <a href="${pageContext.request.contextPath}/reg/signUpPage"><fmt:message key="bar.sign_up" bundle="${loc}"/></a>--%>
-<%--    </security:authorize>--%>
-<%--    <security:authorize access="isAuthenticated()">--%>
-<%--      <a href="${pageContext.request.contextPath}/reg/signOut"><fmt:message key="bar.log_out" bundle="${loc}"/></a>--%>
-<%--      <security:authorize access="hasAuthority('ADMINISTRATOR')">--%>
-<%--        <a href="${pageContext.request.contextPath}/admin"><fmt:message key="bar.admin" bundle="${loc}"/></a>--%>
-<%--      </security:authorize>--%>
-<%--    </security:authorize>--%>
-<%--    <a class="language-btn" href="${pageContext.request.contextPath}/lang">${lang}</a>--%>
-<%--  </nav>--%>
 

@@ -3,17 +3,16 @@ package org.education.service.impl;
 
 import org.education.DAO.ProductDao;
 import org.education.DAO.exception.DatabaseQueryException;
-import org.education.beans.CategoryEnt;
 import org.education.beans.ProductCategoryEnt;
 import org.education.beans.ProductEnt;
+import org.education.beans.ProductStorage;
 import org.education.service.ProductService;
 import org.education.service.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ProductServiceImpl implements ProductService {
@@ -25,24 +24,23 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public List<ProductEnt> GetProductListByCat(String category) throws ServiceException {
-//        List<ProductEnt> list = null;
-//        try {
-//            if (category != null){
-//                ProductDao productDao = DAOFactory.getFactory().getProductDao();
-//                list = productDao.GetProductListByCat(category);
-//
-//            }
-//        }catch (DAOException ex){
-//            throw  new ServiceException(ex);
-//        }
-
         return null;
     }
 
     @Override
-    public List<ProductEnt> GetAllProduct() throws ServiceException {
+    public List<ProductStorage> GetAllProduct() throws ServiceException {
+        List<ProductStorage> prod = new ArrayList<>();
         try{
-            return productDao.GetAllProduct();
+            List<ProductEnt> productEnts= productDao.GetAllProduct();
+            List<ProductCategoryEnt> categoryEnts= productDao.GetAllCategory();
+            for (ProductEnt productEnt : productEnts) {
+                for (ProductCategoryEnt categoryEnt : categoryEnts) {
+                    if (productEnt.getProCat() == categoryEnt.getCatId())
+                        prod.add(new ProductStorage(productEnt, categoryEnt));
+
+                }
+            }
+            return prod;
         }
         catch (DatabaseQueryException e) {
             throw new ServiceException(e.getMessage());

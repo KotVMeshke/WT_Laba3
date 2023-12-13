@@ -1,8 +1,8 @@
 package org.education.service;
 
-import org.education.beans.CategoryEnt;
 import org.education.beans.ProductCategoryEnt;
 import org.education.beans.ProductEnt;
+import org.education.beans.ProductStorage;
 import org.education.service.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
@@ -21,10 +21,11 @@ public interface ProductService {
 
     /**
      * Retrieves all products available in the database.
+     *
      * @return List of all available products.
      * @throws ServiceException if there's an error while fetching products.
      */
-    List<ProductEnt> GetAllProduct() throws ServiceException;
+    List<ProductStorage> GetAllProduct() throws ServiceException;
 
     /**
      * Sets a discount for a specific product.

@@ -30,6 +30,8 @@ public interface ProductDao {
 
     ProductCategoryEnt GetCatByCatName(String name) throws DatabaseQueryException;
 
+    List<ProductCategoryEnt> GetAllCategory() throws DatabaseQueryException;
+
     boolean SetDiscount(ProductEnt product) throws DatabaseQueryException;
 
 

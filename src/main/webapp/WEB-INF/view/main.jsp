@@ -193,22 +193,6 @@
 <jsp:include page="common/header.jsp"/>
 <body>
 
-<div class="movies-container">
-
-    <!-- Movie Cards will be dynamically generated here -->
-
-
-<%--    <c:forEach var="product" items="${products}">--%>
-<%--        <div class="movie-card">--%>
-<%--                <img src="${pageContext.request.contextPath}/images/image.jpg" alt="image"/>--%>
-<%--            <a href="/movie/${Pr.getId()}">${movie.getName()}</a>--%>
-<%--            <p>${movie.getShortDescription()}</p>--%>
-<%--        </div>--%>
-<%--    </c:forEach>--%>
-    <!-- Repeat the movie card structure for other movies -->
-
-</div>
-
 <security:authorize access="isAuthenticated()">
     <a href="${pageContext.request.contextPath}/cart/cartPage"><fmt:message key="main.showcart.button" bundle="${loc}"/></a>
 </security:authorize>
@@ -216,50 +200,32 @@
     <h1><fmt:message key="main.product.header" bundle="${loc}"/></h1>
     <c:forEach var="product" items="${products}">
         <div class="product-box">
-            <h2>${product.getProName()}</h2>
-            <img src="data:image/jpg;base64,${product.getProImage()}" alt="" width="240" height="300"/>
+            <h2>${product.getProduct().getProName()}</h2>
+            <img src="data:image/jpg;base64,${product.getProduct().getProImage()}" alt="" width="240" height="300"/>
             <c:choose>
-                <c:when test="${product.getProDiscount() == 0 or empty product.getProDiscount()}">
-                    <p><fmt:message key="main.product.price" bundle="${loc}"/>: ${product.getProPrice()}</p>
+                <c:when test="${product.getProduct().getProDiscount() == 0 or empty product.getProduct().getProDiscount()}">
+                    <p><fmt:message key="main.product.price" bundle="${loc}"/>: ${product.getProduct().getProPrice()}</p>
                 </c:when>
                 <c:otherwise>
-                    <fmt:formatNumber var="roundedValue" value="${product.getProPrice()*(100-product.getProDiscount())/100}"
+                    <fmt:formatNumber var="roundedValue" value="${product.getProduct().getProPrice()*(100-product.getProduct().getProDiscount())/100}"
                                       pattern="#,##0.00"/>
                     <p><fmt:message key="main.product.price" bundle="${loc}"/>:
-                        <del>${product.getProPrice()}</del>
+                        <del>${product.getProduct().getProPrice()}</del>
                         <span style="color: red;">${roundedValue}</span></p>
                 </c:otherwise>
             </c:choose>
 
 
-            <p><fmt:message key="main.product.category" bundle="${loc}"/>: ${product.getProCat()}</p>
+            <p><fmt:message key="main.product.category" bundle="${loc}"/>: ${product.getCategory().getCatName()}</p>
 
             <security:authorize access="isAuthenticated()">
                 <form:form action="${pageContext.request.contextPath}/addCart" method="post" modelAttribute="addCart">
-                    <form:input path="prodId" value="${product.getProId()}" type="hidden"/>
+                    <form:input path="prodId" value="${product.getProduct().getProId()}" type="hidden"/>
                     <form:button type="submit"><fmt:message key="main.product.add.button" bundle="${loc}"/></form:button>
                 </form:form>
             </security:authorize>
-
-
-<%--            <c:if test="${not empty sessionScope.UserId}">--%>
-<%--                <form action="TechStore" method="post">--%>
-<%--                    <input type="hidden" name="command" value="ADD_TO_CART">--%>
-<%--                    <input type="hidden" name="productId" value="${product.id}">--%>
-<%--                    <button type="submit"><fmt:message key="main.product.add.button"/></button>--%>
-<%--                </form>--%>
-<%--            </c:if>--%>
         </div>
     </c:forEach>
-</div>
-
-<div class="pagination">
-    <c:if test="${page > 0}">
-        <a href="${pageContext.request.contextPath}/main?page=${page-1}"><fmt:message key="main.prev" bundle="${loc}"/></a>
-    </c:if>
-    <c:if test="${page < maxPage}">
-        <a href="${pageContext.request.contextPath}/main?page=${page+1}"><fmt:message key="main.next" bundle="${loc}"/></a>
-    </c:if>
 </div>
 
 </body>

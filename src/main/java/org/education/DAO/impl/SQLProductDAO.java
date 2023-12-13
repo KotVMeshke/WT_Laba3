@@ -86,6 +86,11 @@ public class SQLProductDAO implements ProductDao {
     }
 
 
+    @Override
+    public List<ProductCategoryEnt> GetAllCategory() throws DatabaseQueryException{
+        return sessionFactory.fromTransaction(session -> session.createSelectionQuery("from ProductCategoryEnt ", ProductCategoryEnt.class).getResultList());
+    }
+
     /**
      * Retrieves all products from the database.
      * @return The list of all products.

@@ -9,19 +9,17 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UserDAOImpl implements UserDAO {
+public class SQLUserDAO implements UserDAO {
 
 //    ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public UserDAOImpl(SessionFactory sessionFactory) {
+    public SQLUserDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -75,34 +73,6 @@ public class UserDAOImpl implements UserDAO {
 //        return res;
     }
 
-//    @Override
-//    public Optional<UserEnt> getUserByEmail(String name) throws DatabaseQueryException {
-//        return sessionFactory.fromTransaction(session -> {
-//            var query = session.createSelectionQuery("from UserEnt where userLogin = :name", UserEnt.class);
-//            query.setParameter("name",name);
-//            UserEnt user = query.getSingleResultOrNull();
-//            if (user == null) return Optional.empty();
-//            else return Optional.of(user);
-//        });
-////        Optional<User> res = Optional.empty();
-////        try(Connection connection = connectionPool.getConnection()){
-////            String sql = "SELECT * FROM users WHERE login = ?";
-////            try(PreparedStatement statement = connection.prepareStatement(sql)){
-////                statement.setString(1, name);
-////                try(ResultSet rs = statement.executeQuery()){
-////                    if(rs.next()){
-////                        res = Optional.of(UserMapper.mapperUser(rs));
-////                    }
-////                }
-////            } catch (SQLException e) {
-////                throw new DatabaseQueryException(e.getMessage());
-////            }
-////        } catch (SQLException e) {
-////            throw new DatabaseQueryException(e.getMessage());
-////        }
-////        return res;
-//    }
-//
     @Override
     public Optional<UserEnt> getUserById(int id) throws DatabaseQueryException {
         return sessionFactory.fromTransaction(session -> {
